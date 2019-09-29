@@ -1,16 +1,15 @@
 // from data.js
 var tableData = data;
 
-// empty data
-var emptyData = []
-
 // select table from html
-var table = d3.select("#ufo-table");
+var table = d3.select("#ufo-table").select("tbody");
 var filter = d3.select("#filter-btn")
 
 // update data displayed
 function display(displayedData) {
-  
+  // clear table
+  table.html('')
+  // append data
   displayedData.forEach((observation) => {
     var row = table.append("tr");
     Object.entries(observation).forEach(([key, value]) => {
@@ -20,18 +19,13 @@ function display(displayedData) {
   });
 }
 
-
-
-
 filter.on("click", function() {
   var inputDate = d3.select("#datetime");
   var filterDate = inputDate.property("value");
-  
+  // filter by filter date
   dateFilter = (tableData) => ( tableData.datetime === filterDate )
   filteredData = tableData.filter(dateFilter)
-  
   display(filteredData)
-
 })
 
 
